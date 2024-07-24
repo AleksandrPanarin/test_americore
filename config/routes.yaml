@@ -1,0 +1,5 @@
+controllers:
+    resource:
+        path: ../src/Bridge/Symfony/Controller/
+        namespace: App\Bridge\Symfony\Controller
+    type: attribute

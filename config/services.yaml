@@ -1,0 +1,132 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: '../src/*'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Domain/'
+      - '../src/Kernel.php'
+
+  App\Domain\Client\IdGenerator\:
+    resource: '../src/Domain/Client/IdGenerator/*'
+
+  App\Domain\Loan\IdGenerator\:
+    resource: '../src/Domain/Loan/IdGenerator/*'
+
+  App\Application\Service\:
+    resource: '../src/Application/Service/*'
+
+  App\Infrastructure\:
+    resource: '../src/Infrastructure/*'
+
+  App\Domain\Client\Factory\:
+    resource: '../src/Domain/Client/Factory/*'
+
+  App\Domain\Client\ClientChanger\:
+    resource: '../src/Domain/Client/ClientChanger/*'
+
+  App\Domain\Loan\Factory\:
+    resource: '../src/Domain/Loan/Factory/*'
+
+  App\Domain\Loan\Calculator\:
+    resource: '../src/Domain/Loan/Calculator/*'
+
+  App\Domain\Loan\InterestRateProvider\:
+    resource: '../src/Domain/Loan/InterestRateProvider/*'
+
+  App\Domain\Client\IdGenerator\ClientIdGeneratorInterface: '@App\Domain\Client\IdGenerator\ClientIdGenerator'
+  App\Domain\Client\ClientRepositoryInterface: '@App\Infrastructure\Doctrine\Repository\OrmClientRepository'
+  App\Domain\Client\Factory\ClientFactoryInterface: '@App\Domain\Client\Factory\ClientFactory'
+  App\Domain\Client\ClientChanger\ClientChangerInterface: '@App\Domain\Client\ClientChanger\ClientChanger'
+  App\Domain\Client\LoanIssueChecker\LoanIssueCheckerInterface: '@App\Domain\Client\LoanIssueChecker\LoanIssueChecker'
+
+  App\Domain\Client\Factory\ValidatingClientFactory:
+    decorates: App\Domain\Client\Factory\ClientFactory
+    decoration_priority: 1
+    arguments: [ '@.inner' ]
+
+  App\Domain\Client\ClientChanger\ValidatingClientChanger:
+    decorates: App\Domain\Client\ClientChanger\ClientChanger
+    decoration_priority: 1
+    arguments: [ '@.inner' ]
+
+  App\Domain\Client\LoanIssueChecker\CheckAge:
+    tags: [ 'app.loanIssueChecker' ]
+
+  App\Domain\Client\LoanIssueChecker\CheckCreditRating:
+    tags: [ 'app.loanIssueChecker' ]
+
+  App\Domain\Client\LoanIssueChecker\CheckIncome:
+    tags: [ 'app.loanIssueChecker' ]
+
+  App\Domain\Client\LoanIssueChecker\CheckState:
+    tags: [ 'app.loanIssueChecker' ]
+
+  App\Domain\Client\LoanIssueChecker\LoanIssueChecker:
+    arguments:
+      $checkers: !tagged app.loanIssueChecker
+
+  App\Domain\Loan\IdGenerator\LoanIdGeneratorInterface: '@App\Domain\Loan\IdGenerator\LoanIdGenerator'
+  App\Domain\Loan\Factory\LoanFactoryInterface: '@App\Domain\Loan\Factory\LoanFactory'
+  App\Domain\Loan\LoanRepositoryInterface: '@App\Infrastructure\Doctrine\Repository\OrmLoanRepository'
+  App\Domain\Loan\Calculator\CalculatorInterface: '@App\Domain\Loan\Calculator\Calculator'
+  App\Domain\Loan\InterestRateProvider\InterestRateProviderInterface: '@App\Domain\Loan\InterestRateProvider\InterestRateProvider'
+
+  App\Domain\Loan\Factory\ValidatingLoanFactory:
+    decorates: App\Domain\Loan\Factory\LoanFactory
+    decoration_priority: 1
+    arguments: [ '@.inner' ]
+
+  App\Application\UseCase\AddClientUseCase: '@App\Application\Service\Client\AddClientService'
+  App\Application\UseCase\UpdateClientUseCase: '@App\Application\Service\Client\UpdateClientService'
+  App\Application\UseCase\IssueLoanUseCase: '@App\Application\Service\Loan\IssueLoanService'
+
+  App\Domain\Loan\InterestRateProvider\CaliforniaInterestRateProvider:
+    decorates: App\Domain\Loan\InterestRateProvider\InterestRateProvider
+    decoration_priority: 1
+    arguments: [ '@.inner' ]
+
+  App\Application\Service\Loan\LoggableIssueLoanService:
+    decorates: App\Application\Service\Loan\IssueLoanService
+    decoration_priority: 1
+    arguments: [ '@.inner' ]
+
+  App\Application\Service\Loan\CheckIssueLoanService:
+    decorates: App\Application\Service\Loan\IssueLoanService
+    decoration_priority: 2
+    arguments: [ '@.inner' ]
+
+  App\Application\Service\Client\LoggableUpdateClientService:
+    decorates: App\Application\Service\Client\UpdateClientService
+    decoration_priority: 1
+    arguments: [ '@.inner' ]
+
+  App\Application\Service\Client\LoggableAddClientService:
+    decorates: App\Application\Service\Client\AddClientService
+    decoration_priority: 1
+    arguments: [ '@.inner' ]
+
+  App\Infrastructure\Doctrine\Listener\SendLoanIssuedNotificationListener:
+    tags:
+      - { name: 'doctrine.event_listener', event: 'postPersist' }
+      - { name: 'doctrine.event_listener', event: 'postFlush' }
+
+  App\Bridge\Symfony\Listener\ValidationExceptionListener:
+    tags:
+      - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones

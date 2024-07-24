@@ -1,0 +1,6 @@
+event_sauce:
+  message_repository: '@App\MessageRepository'
+  event_handlers:
+    App\Domain\Loan\Event\LoanIssued:
+      - '@App\Application\Handler\Client\SendEmailNotificationToClientHandler'
+      - '@App\Application\Handler\Client\SendSmsNotificationToClientHandler'
