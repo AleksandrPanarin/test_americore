@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Client;
 
 use App\Domain\Client\Exception\ClientNotFound;
+use App\Domain\Client\LoanIssueChecker\Ssn;
 
 interface ClientRepositoryInterface
 {

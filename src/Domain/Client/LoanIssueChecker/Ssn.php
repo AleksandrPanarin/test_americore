@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Client;
+namespace App\Domain\Client\LoanIssueChecker;
 
-use Doctrine\ORM\Mapping\Embeddable;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embeddable;
 
 #[Embeddable]
 final class Ssn

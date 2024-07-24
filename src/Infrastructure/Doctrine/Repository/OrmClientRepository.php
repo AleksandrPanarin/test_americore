@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Client\Client;
-use App\Domain\Client\ClientContacts;
 use App\Domain\Client\ClientId;
 use App\Domain\Client\ClientRepositoryInterface;
-use App\Domain\Client\Email;
 use App\Domain\Client\Exception\ClientNotFound;
-use App\Domain\Client\Ssn;
+use App\Domain\Client\LoanIssueChecker\Ssn;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 

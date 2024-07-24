@@ -3,6 +3,7 @@
 namespace App\Domain\Client;
 
 use App\Domain\Client\Enums\State;
+use App\Domain\Client\LoanIssueChecker\Ssn;
 use App\Infrastructure\Doctrine\Repository\OrmClientRepository;
 use App\Infrastructure\Doctrine\Type\ClientIdType;
 use Doctrine\ORM\Mapping as ORM;

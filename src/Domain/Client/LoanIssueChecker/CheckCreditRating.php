@@ -8,11 +8,11 @@ use App\Domain\Client\LoanIssueChecker\Exception\LoanIssueCheckerFailed;
 
 final class CheckCreditRating implements LoanIssueCheckerInterface
 {
-    private const int MIN_FICO = 300;
+    private const int MIN_CREDIT_SCORE = 300;
 
     public function check(LoanIssueCheckClientInput $input): void
     {
-        if ($input->creditScore() < self::MIN_FICO) {
+        if ($input->creditScore() < self::MIN_CREDIT_SCORE) {
             throw LoanIssueCheckerFailed::dueToCreditScoreTooLow($input->creditScore());
         }
     }

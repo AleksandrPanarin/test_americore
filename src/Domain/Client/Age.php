@@ -12,8 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[Embeddable]
 final class Age
 {
-    private const  MIN_AGE = 18;
-    private const  MAX_AGE = 60;
+    private const int  MIN_AGE = 18;
+    private const int  MAX_AGE = 60;
 
     #[ORM\Column(type: Types::INTEGER, nullable: false)]
     private int $age;

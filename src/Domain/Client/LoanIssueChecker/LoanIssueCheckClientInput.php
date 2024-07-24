@@ -7,8 +7,6 @@ namespace App\Domain\Client\LoanIssueChecker;
 use App\Domain\Client\Address;
 use App\Domain\Client\Age;
 use App\Domain\Client\ClientFinancialDetails;
-use App\Domain\Client\Ssn;
-use Decimal\Decimal;
 
 final class LoanIssueCheckClientInput
 {

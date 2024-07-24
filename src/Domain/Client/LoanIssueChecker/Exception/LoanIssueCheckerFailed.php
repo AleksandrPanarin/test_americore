@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Client\LoanIssueChecker\Exception;
 
 use App\Domain\Client\Enums\State;
-use Decimal\Decimal;
 use RuntimeException;
 
 final class LoanIssueCheckerFailed extends RuntimeException

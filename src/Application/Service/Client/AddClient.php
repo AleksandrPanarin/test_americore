@@ -11,7 +11,7 @@ use App\Domain\Client\ClientContacts;
 use App\Domain\Client\ClientFinancialDetails;
 use App\Domain\Client\Factory\ClientInput;
 use App\Domain\Client\FullName;
-use App\Domain\Client\Ssn;
+use App\Domain\Client\LoanIssueChecker\Ssn;
 use Decimal\Decimal;
 
 final class AddClient

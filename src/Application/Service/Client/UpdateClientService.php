@@ -16,7 +16,7 @@ use App\Domain\Client\ClientRepositoryInterface;
 use App\Domain\Client\Exception\ClientNotFound;
 use App\Domain\Client\Factory\Exception\AlreadyExistClientInput;
 use App\Domain\Client\FullName;
-use App\Domain\Client\Ssn;
+use App\Domain\Client\LoanIssueChecker\Ssn;
 use Decimal\Decimal;
 use Psr\Log\InvalidArgumentException;
 

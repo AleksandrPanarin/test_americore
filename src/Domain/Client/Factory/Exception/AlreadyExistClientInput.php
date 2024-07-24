@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Client\Factory\Exception;
 
-use App\Domain\Client\Email;
-use App\Domain\Client\Ssn;
+use App\Domain\Client\LoanIssueChecker\Ssn;
 use RuntimeException;
-
 
 final class AlreadyExistClientInput extends RuntimeException
 {

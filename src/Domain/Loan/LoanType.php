@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Loan;
 
-use Decimal\Decimal;
-
 enum LoanType: string
 {
     case STANDARD_CREDIT = 'standard_credit';

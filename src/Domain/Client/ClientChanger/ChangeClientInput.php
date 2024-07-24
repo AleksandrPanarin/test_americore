@@ -10,7 +10,7 @@ use App\Domain\Client\Client;
 use App\Domain\Client\ClientContacts;
 use App\Domain\Client\ClientFinancialDetails;
 use App\Domain\Client\FullName;
-use App\Domain\Client\Ssn;
+use App\Domain\Client\LoanIssueChecker\Ssn;
 
 final class ChangeClientInput
 {

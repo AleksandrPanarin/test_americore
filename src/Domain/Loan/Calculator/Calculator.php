@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Loan\Calculator;
 
-use Ramsey\Uuid\Type\Decimal;
-
 final class Calculator implements CalculatorInterface
 {
     private const int DAY_IN_YEAR = 365;
